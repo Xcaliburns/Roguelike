@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem.XR.Haptics;
 using UnityEngine.Tilemaps;
 
 public class BoardManager : MonoBehaviour
@@ -52,7 +53,6 @@ public class BoardManager : MonoBehaviour
     {
         public bool Passable{ get; set; }
     }
-
    
 
     private Grid m_Grid;
@@ -60,6 +60,15 @@ public class BoardManager : MonoBehaviour
     public Vector3 CellToWorld(Vector2Int cellIndex)
     {
         return m_Grid.GetCellCenterWorld((Vector3Int)cellIndex);
+    }
+
+    public CellData GetCellData(Vector2Int cellIndex)
+    {
+        if (cellIndex.x < 0 || cellIndex.x >= width || cellIndex.y < 0 || cellIndex.y >= height)
+        {
+            return null; // Out of bounds
+        }
+        return m_BoardData[cellIndex.x, cellIndex.y];
     }
 }
 
