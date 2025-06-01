@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 
 public class PlayerCharacterController : MonoBehaviour
 {
@@ -22,9 +23,9 @@ public class PlayerCharacterController : MonoBehaviour
         Vector2Int newCellTarget = m_CellPosition;
         bool hasMoved = false;
 
-        if(Keyboard.current.upArrowKey.wasPressedThisFrame)
+        if (Keyboard.current.upArrowKey.wasPressedThisFrame)
         {
-            newCellTarget.y ++;
+            newCellTarget.y++;
             hasMoved = true;
         }
         else if (Keyboard.current.downArrowKey.wasPressedThisFrame)
@@ -50,11 +51,17 @@ public class PlayerCharacterController : MonoBehaviour
 
             if (cellData != null && cellData.Passable)
             {
-                m_CellPosition = newCellTarget;
-                transform.position = m_Board.CellToWorld(m_CellPosition);
+                GameManager.TurnManager.Tick();
+                MoveTo(newCellTarget);
             }
-        }
 
+        }
     }
 
+    public void MoveTo(Vector2Int cell)
+    {
+        m_CellPosition = cell;
+
+        transform.position = m_Board.CellToWorld(m_CellPosition);
+    }
 }

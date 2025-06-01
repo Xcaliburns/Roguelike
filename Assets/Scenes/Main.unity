@@ -356,6 +356,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62dec6d3956239f4ca8febfa948881d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1830637049
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1830637051}
+  - component: {fileID: 1830637050}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1830637050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1830637049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 764f45eb53b3aeb4290205467a620c52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boardManager: {fileID: 2061229990}
+  playerCharacterController: {fileID: 897493323}
+--- !u!4 &1830637051
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1830637049}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.71393585, y: 0.71262854, z: -0.083758794}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1982692130
 GameObject:
   m_ObjectHideFlags: 0
@@ -537,10 +583,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfc3d60987e17de4fbe493b8233ff03a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 8
-  height: 8
-  groundTiles:
+  Width: 0
+  Height: 0
+  GroundTiles:
   - {fileID: 11400000, guid: 8ad5dce7e853d8648b1ebbe0755af330, type: 2}
+  - {fileID: 11400000, guid: 4f37ede2ffd1fa146bdbd749a4917561, type: 2}
   - {fileID: 11400000, guid: 4f37ede2ffd1fa146bdbd749a4917561, type: 2}
   - {fileID: 11400000, guid: 6db93619e6d15ce4c8c234273f8e86a7, type: 2}
   - {fileID: 11400000, guid: 56cb8ce06417707499b11a67a2282619, type: 2}
@@ -552,7 +599,6 @@ MonoBehaviour:
   WallTiles:
   - {fileID: 11400000, guid: dbc1fe5e87336b447b84904b44388c07, type: 2}
   - {fileID: 11400000, guid: 94efd19133536364986033465feccbac, type: 2}
-  Player: {fileID: 897493323}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -560,3 +606,4 @@ SceneRoots:
   - {fileID: 495819561}
   - {fileID: 2061229989}
   - {fileID: 897493322}
+  - {fileID: 1830637051}
