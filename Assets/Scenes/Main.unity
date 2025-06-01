@@ -651,10 +651,15 @@ MonoBehaviour:
   WallTiles:
   - {fileID: 11400000, guid: dbc1fe5e87336b447b84904b44388c07, type: 2}
   - {fileID: 11400000, guid: 94efd19133536364986033465feccbac, type: 2}
-  FoodPrefabs:
+  FoodPrefab:
   - {fileID: -5861975400466964254, guid: bd22176940deeb34f8ae43b73836ad1d, type: 3}
   - {fileID: -5861975400466964254, guid: e5d7d00775372c941950b1ae24fb821c, type: 3}
   - {fileID: -5861975400466964254, guid: 0a3ae3d29a6c0504d990a54e09846058, type: 3}
+  WallPrefab:
+  - {fileID: 6005781663271690765, guid: 1b6ea124f7d5fa646a746191d1484c79, type: 3}
+  - {fileID: 6005781663271690765, guid: fc3783d4607f9bc4181b5deb0341c690, type: 3}
+  - {fileID: 6005781663271690765, guid: 7eaf117bfda9331489d2d6bde831c7fe, type: 3}
+  - {fileID: 6005781663271690765, guid: e61bd42d9b034744e92621fed9fd3493, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

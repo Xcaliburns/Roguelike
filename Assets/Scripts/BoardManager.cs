@@ -11,7 +11,7 @@ public class BoardManager : MonoBehaviour
         public CellObject ContainedObject;
     }
 
-    public WallObject WallPrefab;
+   
     private CellData[,] m_BoardData;
     private Tilemap m_Tilemap;
     private Grid m_Grid;
@@ -21,7 +21,8 @@ public class BoardManager : MonoBehaviour
     public int Height;
     public Tile[] GroundTiles;
     public Tile[] WallTiles;
-    public FoodObject[] FoodPrefabs; // Array of different food prefabs
+    public FoodObject[] FoodPrefab; // Array of different food prefabs
+    public WallObject[] WallPrefab;
 
     public void Init()
     {
@@ -76,34 +77,15 @@ public class BoardManager : MonoBehaviour
 
     void GenerateFood()
     {
-        if (FoodPrefabs == null || FoodPrefabs.Length == 0)
-        {
-            Debug.LogError("FoodPrefabs array is not assigned or empty!");
-            return;
-        }
-
-        int foodCount = Random.Range(2, 10);
-        Debug.Log($"Generating {foodCount} food items on the board.");
-        Debug.Log($"Empty cells available: {m_EmptyCellsList.Count}");
-        Debug.Log($"FoodPrefabs length: {FoodPrefabs.Length}");
-        for (int j = 0; FoodPrefabs != null && j < FoodPrefabs.Length; ++j)
-        {
-            Debug.Log($"FoodPrefabs[{j}]: {FoodPrefabs[j]}");
-        }
-        
-
-        for (int i = 0; i < foodCount && m_EmptyCellsList.Count > 0; ++i)
+        int foodCount = 5;
+        for (int i = 0; i < foodCount; ++i)
         {
             int randomIndex = Random.Range(0, m_EmptyCellsList.Count);
             Vector2Int coord = m_EmptyCellsList[randomIndex];
 
             m_EmptyCellsList.RemoveAt(randomIndex);
-            CellData data = m_BoardData[coord.x, coord.y];
-
-            // Choose a random food prefab
-            FoodObject foodPrefab = FoodPrefabs[Random.Range(0, FoodPrefabs.Length)];            
-            FoodObject newFood = Instantiate(foodPrefab, CellToWorld(coord), Quaternion.identity, transform);
-            data.ContainedObject = newFood;
+            FoodObject newFood = Instantiate(FoodPrefab[Random.Range(0, FoodPrefab.Length)]);
+            AddObject(newFood, coord);
         }
     }
 
@@ -116,20 +98,25 @@ public class BoardManager : MonoBehaviour
             Vector2Int coord = m_EmptyCellsList[randomIndex];
 
             m_EmptyCellsList.RemoveAt(randomIndex);
-            CellData data = m_BoardData[coord.x, coord.y];
-            WallObject newWall = Instantiate(WallPrefab);
-
-            newWall.transform.position = CellToWorld(coord);
-
-            newWall.Init(coord);
-            newWall.transform.position = CellToWorld(coord); newWall.Init(coord);
-
-            data.ContainedObject = newWall;
+            WallObject newWall = Instantiate(WallPrefab[Random.Range(0, WallPrefab.Length)]);
+            AddObject(newWall, coord);
         }
     }
 
     public void SetCellTile(Vector2Int cellIndex, Tile tile)
     {
         m_Tilemap.SetTile(new Vector3Int(cellIndex.x, cellIndex.y, 0), tile);
+    }
+    public Tile GetCellTile(Vector2Int cellIndex)
+    {
+        return m_Tilemap.GetTile<Tile>(new Vector3Int(cellIndex.x, cellIndex.y, 0));
+    }
+
+    void AddObject(CellObject obj, Vector2Int coord)
+    {
+        CellData data = m_BoardData[coord.x, coord.y];
+        obj.transform.position = CellToWorld(coord);
+        data.ContainedObject = obj;
+        obj.Init(coord);
     }
 }
