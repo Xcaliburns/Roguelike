@@ -11,6 +11,7 @@ public class BoardManager : MonoBehaviour
         public CellObject ContainedObject;
     }
 
+    public WallObject WallPrefab;
     private CellData[,] m_BoardData;
     private Tilemap m_Tilemap;
     private Grid m_Grid;
@@ -53,6 +54,7 @@ public class BoardManager : MonoBehaviour
             }
         }
         m_EmptyCellsList.Remove(new Vector2Int(1, 1));
+        GenerateWall();
         GenerateFood();
     }
 
@@ -99,21 +101,35 @@ public class BoardManager : MonoBehaviour
             CellData data = m_BoardData[coord.x, coord.y];
 
             // Choose a random food prefab
-            FoodObject foodPrefab = FoodPrefabs[Random.Range(0, FoodPrefabs.Length)];
-            Debug.Log($"Instantiating prefab: {foodPrefab}, type: {(foodPrefab != null ? foodPrefab.GetType().ToString() : "null")}");
-
-            if (foodPrefab == null)
-            {
-                Debug.Log($"FoodPrefabs length: {(FoodPrefabs != null ? FoodPrefabs.Length : 0)}");
-                for (int y = 0; FoodPrefabs != null && y < FoodPrefabs.Length; ++y)
-                {
-                    Debug.Log($"FoodPrefabs[{y}]: {FoodPrefabs[y]}");
-                }
-                Debug.LogError("A FoodPrefab is null in the FoodPrefabs array!");
-                continue;
-            }
+            FoodObject foodPrefab = FoodPrefabs[Random.Range(0, FoodPrefabs.Length)];            
             FoodObject newFood = Instantiate(foodPrefab, CellToWorld(coord), Quaternion.identity, transform);
             data.ContainedObject = newFood;
         }
+    }
+
+    void GenerateWall()
+    {
+        int wallCount = Random.Range(6, 10);
+        for (int i = 0; i < wallCount; ++i)
+        {
+            int randomIndex = Random.Range(0, m_EmptyCellsList.Count);
+            Vector2Int coord = m_EmptyCellsList[randomIndex];
+
+            m_EmptyCellsList.RemoveAt(randomIndex);
+            CellData data = m_BoardData[coord.x, coord.y];
+            WallObject newWall = Instantiate(WallPrefab);
+
+            newWall.transform.position = CellToWorld(coord);
+
+            newWall.Init(coord);
+            newWall.transform.position = CellToWorld(coord); newWall.Init(coord);
+
+            data.ContainedObject = newWall;
+        }
+    }
+
+    public void SetCellTile(Vector2Int cellIndex, Tile tile)
+    {
+        m_Tilemap.SetTile(new Vector3Int(cellIndex.x, cellIndex.y, 0), tile);
     }
 }

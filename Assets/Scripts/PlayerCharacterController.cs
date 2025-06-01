@@ -49,14 +49,22 @@ public class PlayerCharacterController : MonoBehaviour
             //check if the new cell is within bounds and passable
             BoardManager.CellData cellData = m_Board.GetCellData(newCellTarget);
 
-            if (cellData != null && cellData.Passable)
+             if (cellData != null && cellData.Passable)
             {
                 GameManager.TurnManager.Tick();
-                MoveTo(newCellTarget);
-                if (cellData.ContainedObject != null)
+                //if the cell is passable, move the player
+                if(cellData.ContainedObject== null)
                 {
+                    MoveTo(newCellTarget);
+                }
+
+                else if (cellData.ContainedObject.PlayerWantsToEnter())
+                {                                   
+                    MoveTo(newCellTarget);
+                    //if the cell has an object, call PlayerWantsToEnter
                     cellData.ContainedObject.PlayerEntered();
                 }
+               
             }
 
         }
