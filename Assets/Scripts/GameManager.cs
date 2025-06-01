@@ -1,4 +1,6 @@
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class GameManager : MonoBehaviour
 {
@@ -7,6 +9,9 @@ public class GameManager : MonoBehaviour
 
     public BoardManager boardManager;
     public PlayerCharacterController playerCharacterController;
+    public UIDocument UIDocument;
+    private Label m_FoodLabel;
+    private int m_FoodAmount = 100;
 
     public static TurnManager TurnManager { get; private set; }
 
@@ -26,9 +31,25 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         TurnManager = new TurnManager();
+        // note that there are non () here, because we are not using the MonoBehaviour version of TurnManager
+        TurnManager.OnTick += OnTurnHappen;
 
         boardManager.Init();
         playerCharacterController.Spawn(boardManager, new Vector2Int(1, 1));
+
+        m_FoodLabel = UIDocument.rootVisualElement.Q<Label>("FoodLabel");
+        m_FoodLabel.text = "Food : " + m_FoodAmount;
+    }
+
+    void OnTurnHappen()
+    {
+        ChangeFood(-1);
+    }
+
+    public void ChangeFood(int amount)
+    {
+        m_FoodAmount += amount;
+        m_FoodLabel.text = "Food : " + m_FoodAmount;
     }
 
     // Update is called once per frame
