@@ -637,6 +637,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Width: 8
   Height: 8
+  ExitCellPrefab: {fileID: 5507923403533159720, guid: 94fd99436ae4a934284a246707bffca5, type: 3}
   GroundTiles:
   - {fileID: 11400000, guid: 8ad5dce7e853d8648b1ebbe0755af330, type: 2}
   - {fileID: 11400000, guid: 4f37ede2ffd1fa146bdbd749a4917561, type: 2}
